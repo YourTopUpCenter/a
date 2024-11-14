@@ -39,6 +39,23 @@
         button:hover {
             background-color: #0056b3;
         }
+        .popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 400px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  animation: popupShow 0.5s ease;
+}
+.hidden { display: none; }
+.close-icon { cursor: pointer; float: right; font-size: 20px; }
+@keyframes popupShow { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -48,9 +65,38 @@
         <button onclick="showAlert()">Click Me</button>
     </div>
 
+    <div id="popup" class="popup hidden">
+  <span class="close-icon" onclick="closePopup()">✕</span>
+  <img id="popupImage" src="" alt="Popup Image">
+  <h2 id="popupTitle"></h2>
+  <p id="popupSubtitle"></p>
+  <a id="popupButton" href="#" target="_blank"></a>
+    </div>
+
     <script>
         function showAlert() {
             alert("Button clicked!");
+        }
+
+    document.addEventListener("DOMContentLoaded", function () {
+  const pageURL = window.location.href;
+  fetch("https://script.google.com/macros/s/AKfycbwj8RWCLnYrVLBiox9p2suJtTO8jmU-leXGR5G0ufoiH0fu_k2tZ8QA_1SKxwp1100TEg/exec")
+    .then(response => response.json())
+    .then(data => {
+      const popupData = data.find(item => item["Page URL"] === pageURL && item["Show Popup"] === "Yes");
+      if (popupData) {
+        document.getElementById("popupImage").src = popupData["Image URL"];
+        document.getElementById("popupTitle").textContent = popupData["Title"];
+        document.getElementById("popupSubtitle").textContent = popupData["Subtitle"];
+        document.getElementById("popupButton").textContent = popupData["Button Title"];
+        document.getElementById("popupButton").href = popupData["Button Link"];
+        document.getElementById("popup").classList.remove("hidden");
+      }
+    });
+});
+
+function closePopup() {
+  document.getElementById("popup").classList.add("hidden");
         }
     </script>
 </body>
