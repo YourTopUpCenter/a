@@ -1,103 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Webpage</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f4f4f9;
-        }
-        .container {
-            text-align: center;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #666;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  max-width: 400px;
-  padding: 20px;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 10px;
-  text-align: center;
-  animation: popupShow 0.5s ease;
-}
-.hidden { display: none; }
-.close-icon { cursor: pointer; float: right; font-size: 20px; }
-@keyframes popupShow { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flower Media Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url(b.jpg);
+     
+     
+       background-size: cover; 
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+      
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      text-align: center;
+      color: #e91e63;
+      margin: 20px 0;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+    
+     p {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      text-align: center;
+      color: #e91e63;
+      margin: 20px 0;
+      animation: fadeIn 1.5s ease-in-out;
+    }
+
+    /* Slideshow */
+    .slideshow-container {
+      position: relative;
+      max-width: 800px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      margin: 0 5% 0 5%;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+    }
+    .active {
+      display: block;
+      animation: fadeIn 1s ease-in-out;
+    }
+    .prev, .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .prev { left: 10px; }
+    .next { right: 10px; }
+
+    /* Gallery */
+    .gallery-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px; 
+      animation: fadeIn 1s ease-in-out;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .gallery-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    .gallery-item img, .gallery-item video {
+      width: 450px;
+      height: 500px;
+      object-fit: cover;
+      border-radius: 15px;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .modal-content {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      transform: scale(0.8);
+      transition: transform 0.3s ease-in-out;
+    }
+    .modal.show .modal-content {
+      transform: scale(1);
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 2rem;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    /* Ad Section */
+    .ad-container {
+      text-align: center;
+      margin: 40px 0;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+    }
+    .ad-container img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+   
+    .footer {
+      text-align: center;
+      color: #000;
+      padding: 20px;
+      background: #e91e63;
+      
+      font-size: 14px;
+      margin-top: 40px; 
+      font-family: 'Poppins', sans-serif;
+    }
+   .footer p{
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+   }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to My Webpage</h1>
-        <p>This is a simple webpage created with HTML, CSS, and JavaScript.</p>
-        <button onclick="showAlert()">Click Me</button>
+  <h1>Flower Demo</h1>
+  <p>Artificial Flowers, Real Emotions
+</p>
+
+  <!-- Slideshow -->
+  <div class="slideshow-container">
+    <img class="slide active" src="https://img.freepik.com/free-vector/peonies-maroon-floral-frame-wedding-invitation-flower-frame-with-peonies-leaves-berries-isolated-white-background-design-card-print-invitations_41066-3795.jpg?t=st=1739530133~exp=1739533733~hmac=c6d9eeef6c1b6842bb80a7a10e5ee5c1657fdbfd95c676e55a12c7ef9fbff36a&w=826">
+    <img class="slide" src="https://img.freepik.com/free-vector/peonies-maroon-floral-frame-wedding-invitation-flower-frame-with-peonies-leaves-berries-isolated-white-background-design-card-print-invitations_41066-3795.jpg?t=st=1739530133~exp=1739533733~hmac=c6d9eeef6c1b6842bb80a7a10e5ee5c1657fdbfd95c676e55a12c7ef9fbff36a&w=826">
+    <img class="slide" src="https://img.freepik.com/free-vector/peonies-maroon-floral-frame-wedding-invitation-flower-frame-with-peonies-leaves-berries-isolated-white-background-design-card-print-invitations_41066-3795.jpg?t=st=1739530133~exp=1739533733~hmac=c6d9eeef6c1b6842bb80a7a10e5ee5c1657fdbfd95c676e55a12c7ef9fbff36a&w=826">
+    <div class="prev" onclick="prevSlide()">❮</div>
+    <div class="next" onclick="nextSlide()">❯</div>
+  </div>
+
+  <!-- Image Gallery -->
+  <h2 style="text-align: center;">Image Gallery</h2>
+  <div class="gallery-container">
+    <div class="gallery-item">
+      <img src="https://via.placeholder.com/300x200" alt="Image 1">
     </div>
-
-    <div id="popup" class="popup hidden">
-  <span class="close-icon" onclick="closePopup()">✕</span>
-  <img id="popupImage" src="" alt="Popup Image">
-  <h2 id="popupTitle"></h2>
-  <p id="popupSubtitle"></p>
-  <a id="popupButton" href="#" target="_blank"></a>
+    <div class="gallery-item">
+      <img src="https://img.freepik.com/free-vector/empty-wooden-room_1441-4014.jpg?t=st=1739531720~exp=1739535320~hmac=09d9fc9bab97b88369bbcc2574cf66495816a9227da68f07f229c612a016bd5b&w=826" alt="Image 2">
     </div>
+  </div>
 
-    <script>
-        function showAlert() {
-            alert("Button clicked!");
-        }
+  <!-- Video Gallery -->
+  <h2 style="text-align: center;">Video Gallery</h2>
+  <div class="gallery-container">
+    <div class="gallery-item">
+      <video width="300" height="200">
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
 
-    document.addEventListener("DOMContentLoaded", function () {
-  const pageURL = window.location.href;
-  fetch("https://script.google.com/macros/s/AKfycbwj8RWCLnYrVLBiox9p2suJtTO8jmU-leXGR5G0ufoiH0fu_k2tZ8QA_1SKxwp1100TEg/exec")
-    .then(response => response.json())
-    .then(data => {
-      const popupData = data.find(item => item["Page URL"] === pageURL && item["Show Popup"] === "Yes");
-      if (popupData) {
-        document.getElementById("popupImage").src = popupData["Image URL"];
-        document.getElementById("popupTitle").textContent = popupData["Title"];
-        document.getElementById("popupSubtitle").textContent = popupData["Subtitle"];
-        document.getElementById("popupButton").textContent = popupData["Button Title"];
-        document.getElementById("popupButton").href = popupData["Button Link"];
-        document.getElementById("popup").classList.remove("hidden");
-      }
-    });
-});
+  <!-- Popup Modal -->
+  <div id="modal" class="modal">
+    <span class="close-btn">&times;</span>
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="">
+      <video id="modal-video" controls style="display: none;">
+        <source src="" type="video/mp4">
+      </video>
+    </div>
+  </div>
 
-function closePopup() {
-  document.getElementById("popup").classList.add("hidden");
-        }
-    </script>
+  <!-- Ad Section -->
+  <div class="ad-container">
+    <h2>Advertisement</h2>
+    <a href="https://your-ad-link.com" target="_blank">
+      <img src="https://via.placeholder.com/728x90" alt="Ad Banner">
+    </a>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer" style="color: #000;">
+    <p style="color: #000;">&copy; 2025 Your TopUp Center. All rights reserved.</p>
+    <p style="color: #000;">Developed by Ali Hosen</p>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    let slideIndex = 0;
+    const slides = document.querySelectorAll(".slide");
+
+    function showSlides() {
+      slides.forEach(slide => slide.classList.remove("active"));
+      slideIndex = (slideIndex + 1) % slides.length;
+      slides[slideIndex].classList.add("active");
+    }
+    setInterval(showSlides, 3000);
+
+    function prevSlide() {
+      slideIndex = (slideIndex - 1 + slides.length) % slides.length;
+      showSlides();
+    }
+    function nextSlide() {
+      slideIndex = (slideIndex + 1) % slides.length;
+      showSlides();
+    }
+  </script>
 </body>
 </html>
